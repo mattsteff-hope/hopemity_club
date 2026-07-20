@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-  <!-- H monogram: Deep Navy stems, Sunrise Gold horizon crossbar -->
-  <rect x="38" y="30" width="34" height="140" rx="8" fill="#072B59"/>
-  <rect x="128" y="30" width="34" height="140" rx="8" fill="#072B59"/>
-  <!-- gold sunrise crossbar: curved horizon swoosh -->
-  <path d="M 55 106 C 85 90 115 90 145 106" fill="none" stroke="#F7AE1A" stroke-width="24" stroke-linecap="round"/>
+  <!-- H monogram per brand manual letterform (Montserrat Bold H), Deep Navy -->
+  <g fill="#072B59">
+    <rect x="42" y="30" width="32" height="140"/>
+    <rect x="126" y="30" width="32" height="140"/>
+    <rect x="74" y="86" width="52" height="28"/>
+  </g>
 </svg>
