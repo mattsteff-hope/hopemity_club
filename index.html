@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hopemity Club · Indonesia Market Watch</title>
+<meta name="description" content="Live Indonesia market dashboard for Hopemity Club members: IDX indices, blue chips, Rupiah rates, and Hopemity Consulting market and political updates.">
+<meta property="og:title" content="Hopemity Club · Indonesia Market Watch">
+<meta property="og:description" content="Live IDX, Rupiah and Hopemity Consulting updates for club members.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23072B59'/%3E%3Cpath d='M18 36a14 14 0 0 1 28 0z' fill='%23F7AE1A'/%3E%3Cpath d='M12 40q20 10 40 0l-2 6q-18 8-36 0z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#072B59; --navy-2:#0A3568; --gold:#F7AE1A; --white:#FFFFFF;
+    --gray:#F5F5F5; --slate:#4B5563; --line:#E3E7EE;
+    --up:#1B7A4B; --down:#C0392B;
+    --radius:12px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--gray);color:#22314A;line-height:1.6}
+  h1,h2,h3,.font-display{font-family:'Montserrat',sans-serif}
+
+  /* ---------- header ---------- */
+  header{background:var(--navy);color:var(--white);border-bottom:3px solid var(--gold)}
+  .head-inner{max-width:1200px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:12px;min-width:0}
+  .brand svg{flex:0 0 auto}
+  .brand-name{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:.04em}
+  .brand-name span{display:block;font-weight:600;font-size:.62rem;letter-spacing:.34em;color:var(--gold)}
+  .head-title{flex:1 1 auto;min-width:200px;border-left:1px solid rgba(255,255,255,.18);padding-left:16px}
+  .head-title h1{font-size:1.15rem;font-weight:700;letter-spacing:.01em}
+  .head-title p{font-size:.78rem;color:#B9C6DA}
+  .head-tools{display:flex;align-items:center;gap:12px;margin-left:auto;flex-wrap:wrap}
+  .clock{text-align:right;font-size:.78rem;color:#B9C6DA}
+  .clock b{display:block;font-family:'Montserrat',sans-serif;font-size:1rem;color:var(--white);letter-spacing:.05em}
+  .status{display:inline-flex;align-items:center;gap:7px;font-size:.75rem;font-weight:600;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.08)}
+  .status .dot{width:8px;height:8px;border-radius:50%}
+  .status.open .dot{background:#3ECF8E;box-shadow:0 0 0 3px rgba(62,207,142,.25)}
+  .status.break .dot{background:var(--gold);box-shadow:0 0 0 3px rgba(247,174,26,.25)}
+  .status.closed .dot{background:#8B99AC;box-shadow:0 0 0 3px rgba(139,153,172,.2)}
+  .lang{display:inline-flex;border:1px solid rgba(255,255,255,.3);border-radius:999px;overflow:hidden}
+  .lang button{background:transparent;border:0;color:#B9C6DA;font:600 .75rem 'Montserrat',sans-serif;padding:7px 14px;cursor:pointer;letter-spacing:.06em}
+  .lang button.active{background:var(--gold);color:var(--navy)}
+
+  /* ---------- layout ---------- */
+  main{max-width:1200px;margin:0 auto;padding:22px 20px 40px}
+  section{margin-bottom:28px}
+  .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:14px}
+  .sec-head h2{color:var(--navy);font-size:1.15rem;font-weight:700}
+  .sec-head::before{content:"";width:26px;height:5px;background:var(--gold);border-radius:3px;align-self:center}
+  .sec-head small{color:var(--slate);font-size:.78rem}
+  .card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 2px rgba(7,43,89,.05)}
+  .tape{margin-bottom:24px}
+  .pulse-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .chart-wrap{height:520px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .chips button{border:1px solid var(--line);background:var(--white);color:var(--navy);font:600 .78rem 'Montserrat',sans-serif;padding:7px 14px;border-radius:999px;cursor:pointer;transition:.15s}
+  .chips button:hover{border-color:var(--gold)}
+  .chips button.active{background:var(--navy);color:var(--white);border-color:var(--navy)}
+  .quotes-wrap{min-height:400px}
+
+  /* ---------- updates ---------- */
+  .tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+  .tabs button{border:1px solid var(--line);background:var(--white);color:var(--slate);font:600 .82rem 'Montserrat',sans-serif;padding:9px 18px;border-radius:999px;cursor:pointer}
+  .tabs button.active{background:var(--navy);color:var(--white);border-color:var(--navy)}
+  .update{background:var(--white);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px}
+  .update .meta{display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap}
+  .update .date{font:600 .72rem 'Montserrat',sans-serif;color:var(--white);background:var(--navy);padding:3px 10px;border-radius:999px;letter-spacing:.05em}
+  .update .kind{font:600 .72rem 'Montserrat',sans-serif;color:var(--slate);letter-spacing:.08em;text-transform:uppercase}
+  .update h3{color:var(--navy);font-size:1.02rem;margin-bottom:6px}
+  .update p{font-size:.9rem;color:#374357;margin-bottom:8px;white-space:pre-line}
+  .update p:last-child{margin-bottom:0}
+  .empty{background:var(--white);border:1px dashed var(--line);border-radius:var(--radius);padding:30px;text-align:center;color:var(--slate);font-size:.9rem}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--navy);color:#B9C6DA;border-top:3px solid var(--gold)}
+  .foot-inner{max-width:1200px;margin:0 auto;padding:26px 20px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+  .foot-inner .tagline{font-family:'Montserrat',sans-serif;font-weight:700;color:var(--white);font-size:.95rem}
+  .foot-inner .disclaimer{font-size:.75rem;max-width:560px}
+  .foot-inner .copy{margin-left:auto;font-size:.75rem}
+
+  @media (max-width:900px){
+    .pulse-grid{grid-template-columns:1fr}
+    .chart-wrap{height:420px}
+    .head-title{border-left:0;padding-left:0;flex-basis:100%}
+    .head-tools{margin-left:0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-inner">
+    <div class="brand">
+      <svg width="46" height="40" viewBox="0 0 64 56" aria-hidden="true">
+        <path d="M14 34a18 18 0 0 1 36 0z" fill="#F7AE1A"/>
+        <path d="M8 30 A26 26 0 0 1 56 30" fill="none" stroke="#F7AE1A" stroke-width="4" stroke-linecap="round"/>
+        <path d="M6 38q26 12 52 0l-3 7q-23 10-46 0z" fill="#fff"/>
+      </svg>
+      <div class="brand-name">HOPEMITY<span>CONSULTING</span></div>
+    </div>
+    <div class="head-title">
+      <h1 data-i18n="title">Indonesia Market Watch</h1>
+      <p data-i18n="subtitle">Live market intelligence for Hopemity Club members</p>
+    </div>
+    <div class="head-tools">
+      <div class="clock"><b id="clock">--:--:--</b><span data-i18n="jakartaTime">Jakarta time (WIB)</span></div>
+      <div class="status closed" id="mktStatus"><span class="dot"></span><span id="mktStatusLabel">...</span></div>
+      <div class="lang">
+        <button id="btnEN" onclick="setLang('en')">EN</button>
+        <button id="btnID" onclick="setLang('id')">ID</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="tape card" id="w-tape" style="border-radius:0 0 var(--radius) var(--radius)"></div>
+
+  <section>
+    <div class="sec-head"><h2 data-i18n="pulse">Market Pulse</h2><small data-i18n="pulseSub">IHSG, LQ45 and the Rupiah at a glance</small></div>
+    <div class="pulse-grid">
+      <div class="card" id="w-mini1"></div>
+      <div class="card" id="w-mini2"></div>
+      <div class="card" id="w-mini3"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2 data-i18n="chart">Live Chart</h2><small data-i18n="chartSub">Real-time chart, switch instruments below</small></div>
+    <div class="chips" id="symChips"></div>
+    <div class="card chart-wrap" id="w-chart"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2 data-i18n="board">Quotes Board</h2><small data-i18n="boardSub">Indices, IDX blue chips and Rupiah crosses</small></div>
+    <div class="card quotes-wrap" id="w-quotes"></div>
+  </section>
+
+  <section id="updates">
+    <div class="sec-head"><h2 data-i18n="updates">Hopemity Updates</h2><small id="lastUpdated"></small></div>
+    <div class="tabs">
+      <button id="tabMarket" class="active" onclick="setTab('market')" data-i18n="tabMarket">Daily Market Update</button>
+      <button id="tabPolitical" onclick="setTab('political')" data-i18n="tabPolitical">Weekly Political Update</button>
+    </div>
+    <div id="updatesList"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <div>
+      <div class="tagline">Strategic Clarity. Sustainable Growth.</div>
+      <div class="disclaimer" data-i18n="disclaimer">Market data provided by TradingView. This dashboard is prepared for Hopemity Club members for information purposes only and is not investment advice.</div>
+    </div>
+    <div class="copy">© 2026 Hopemity Consulting</div>
+  </div>
+</footer>
+
+<script>
+/* ================= i18n ================= */
+const I18N = {
+  en: {
+    title:"Indonesia Market Watch",
+    subtitle:"Live market intelligence for Hopemity Club members",
+    jakartaTime:"Jakarta time (WIB)",
+    open:"Market Open", brk:"Lunch Break", closed:"Market Closed",
+    pulse:"Market Pulse", pulseSub:"IHSG, LQ45 and the Rupiah at a glance",
+    chart:"Live Chart", chartSub:"Real-time chart, switch instruments below",
+    board:"Quotes Board", boardSub:"Indices, IDX blue chips and Rupiah crosses",
+    updates:"Hopemity Updates",
+    tabMarket:"Daily Market Update", tabPolitical:"Weekly Political Update",
+    empty:"No updates posted yet. Check back soon.",
+    lastUpdated:"Last posted:",
+    disclaimer:"Market data provided by TradingView. This dashboard is prepared for Hopemity Club members for information purposes only and is not investment advice.",
+    groups:["Indices","IDX Blue Chips","Rupiah FX"]
+  },
+  id: {
+    title:"Pantauan Pasar Indonesia",
+    subtitle:"Intelijen pasar langsung untuk anggota Hopemity Club",
+    jakartaTime:"Waktu Jakarta (WIB)",
+    open:"Bursa Buka", brk:"Jeda Siang", closed:"Bursa Tutup",
+    pulse:"Denyut Pasar", pulseSub:"IHSG, LQ45 dan Rupiah dalam sekilas",
+    chart:"Grafik Langsung", chartSub:"Grafik real-time, ganti instrumen di bawah",
+    board:"Papan Harga", boardSub:"Indeks, saham unggulan BEI dan kurs Rupiah",
+    updates:"Kabar Hopemity",
+    tabMarket:"Ulasan Pasar Harian", tabPolitical:"Ulasan Politik Mingguan",
+    empty:"Belum ada kabar terbaru. Silakan cek kembali.",
+    lastUpdated:"Terakhir diposting:",
+    disclaimer:"Data pasar disediakan oleh TradingView. Dasbor ini disiapkan untuk anggota Hopemity Club sebagai informasi dan bukan merupakan saran investasi.",
+    groups:["Indeks","Saham Unggulan BEI","Kurs Rupiah"]
+  }
+};
+let lang = localStorage.getItem('hopemity_lang') || 'en';
+
+/* ================= market clock ================= */
+function jakartaNow(){
+  return new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Jakarta'}));
+}
+function tickClock(){
+  const d = jakartaNow();
+  document.getElementById('clock').textContent = d.toTimeString().slice(0,8);
+  const day = d.getDay(), mins = d.getHours()*60 + d.getMinutes();
+  let state = 'closed';
+  if(day>=1 && day<=5){
+    const s1 = [9*60, day===5 ? 11*60+30 : 12*60];
+    const s2 = [day===5 ? 14*60 : 13*60+30, 15*60+49];
+    if(mins>=s1[0] && mins<s1[1] || mins>=s2[0] && mins<s2[1]) state='open';
+    else if(mins>=s1[1] && mins<s2[0]) state='brk';
+  }
+  const el = document.getElementById('mktStatus');
+  el.className = 'status ' + (state==='brk'?'break':state);
+  document.getElementById('mktStatusLabel').textContent = I18N[lang][state==='brk'?'brk':state];
+}
+setInterval(tickClock, 1000);
+
+/* ================= TradingView widgets ================= */
+function tvWidget(containerId, script, config){
+  const host = document.getElementById(containerId);
+  host.innerHTML = '';
+  const outer = document.createElement('div');
+  outer.className = 'tradingview-widget-container';
+  outer.style.height = '100%';
+  const inner = document.createElement('div');
+  inner.className = 'tradingview-widget-container__widget';
+  inner.style.height = '100%';
+  outer.appendChild(inner);
+  const s = document.createElement('script');
+  s.type = 'text/javascript'; s.async = true;
+  s.src = 'https://s3.tradingview.com/external-embedding/embed-widget-' + script + '.js';
+  s.innerHTML = JSON.stringify(config);
+  outer.appendChild(s);
+  host.appendChild(outer);
+}
+const tvLocale = () => lang === 'id' ? 'id' : 'en';
+
+const CHART_SYMBOLS = [
+  ["IHSG","IDX:COMPOSITE"], ["LQ45","IDX:LQ45"], ["USD/IDR","FX_IDC:USDIDR"],
+  ["BBCA","IDX:BBCA"], ["BBRI","IDX:BBRI"], ["BMRI","IDX:BMRI"],
+  ["TLKM","IDX:TLKM"], ["ASII","IDX:ASII"], ["GOTO","IDX:GOTO"]
+];
+let currentSymbol = "IDX:COMPOSITE";
+
+function renderChips(){
+  const wrap = document.getElementById('symChips');
+  wrap.innerHTML = '';
+  CHART_SYMBOLS.forEach(([label, sym]) => {
+    const b = document.createElement('button');
+    b.textContent = label;
+    if(sym === currentSymbol) b.className = 'active';
+    b.onclick = () => { currentSymbol = sym; renderChips(); renderChart(); };
+    wrap.appendChild(b);
+  });
+}
+function renderChart(){
+  tvWidget('w-chart','advanced-chart',{
+    autosize:true, symbol:currentSymbol, interval:"15", timezone:"Asia/Jakarta",
+    theme:"light", style:"1", locale:tvLocale(), allow_symbol_change:true,
+    hide_side_toolbar:true, save_image:false, support_host:"https://www.tradingview.com"
+  });
+}
+function renderWidgets(){
+  tvWidget('w-tape','ticker-tape',{
+    symbols:[
+      {proName:"IDX:COMPOSITE", title:"IHSG"},
+      {proName:"IDX:LQ45", title:"LQ45"},
+      {proName:"FX_IDC:USDIDR", title:"USD/IDR"},
+      {proName:"FX_IDC:SGDIDR", title:"SGD/IDR"},
+      {proName:"FX_IDC:EURIDR", title:"EUR/IDR"},
+      {proName:"FX_IDC:JPYIDR", title:"JPY/IDR"}
+    ],
+    showSymbolLogo:true, isTransparent:true, displayMode:"adaptive",
+    colorTheme:"light", locale:tvLocale()
+  });
+  const mini = (id, symbol) => tvWidget(id,'mini-symbol-overview',{
+    symbol, width:"100%", height:220, locale:tvLocale(), dateRange:"1D",
+    colorTheme:"light", isTransparent:true, autosize:true, largeChartUrl:""
+  });
+  mini('w-mini1',"IDX:COMPOSITE");
+  mini('w-mini2',"IDX:LQ45");
+  mini('w-mini3',"FX_IDC:USDIDR");
+  const g = I18N[lang].groups;
+  tvWidget('w-quotes','market-quotes',{
+    width:"100%", height:420, isTransparent:true, colorTheme:"light", locale:tvLocale(),
+    symbolsGroups:[
+      {name:g[0], symbols:[
+        {name:"IDX:COMPOSITE", displayName:"IHSG (Jakarta Composite)"},
+        {name:"IDX:LQ45", displayName:"LQ45"},
+        {name:"IDX:IDX30", displayName:"IDX30"}
+      ]},
+      {name:g[1], symbols:[
+        {name:"IDX:BBCA", displayName:"Bank Central Asia"},
+        {name:"IDX:BBRI", displayName:"Bank Rakyat Indonesia"},
+        {name:"IDX:BMRI", displayName:"Bank Mandiri"},
+        {name:"IDX:BBNI", displayName:"Bank Negara Indonesia"},
+        {name:"IDX:TLKM", displayName:"Telkom Indonesia"},
+        {name:"IDX:ASII", displayName:"Astra International"},
+        {name:"IDX:UNVR", displayName:"Unilever Indonesia"},
+        {name:"IDX:GOTO", displayName:"GoTo Gojek Tokopedia"},
+        {name:"IDX:ANTM", displayName:"Aneka Tambang"},
+        {name:"IDX:ICBP", displayName:"Indofood CBP"}
+      ]},
+      {name:g[2], symbols:[
+        {name:"FX_IDC:USDIDR", displayName:"US Dollar / Rupiah"},
+        {name:"FX_IDC:EURIDR", displayName:"Euro / Rupiah"},
+        {name:"FX_IDC:SGDIDR", displayName:"Singapore Dollar / Rupiah"},
+        {name:"FX_IDC:JPYIDR", displayName:"Japanese Yen / Rupiah"},
+        {name:"FX_IDC:CNYIDR", displayName:"Chinese Yuan / Rupiah"},
+        {name:"FX_IDC:AUDIDR", displayName:"Australian Dollar / Rupiah"}
+      ]}
+    ]
+  });
+  renderChart();
+}
+
+/* ================= updates ================= */
+let UPDATES = { market: [], political: [] };
+let tab = 'market';
+
+function setTab(t){
+  tab = t;
+  document.getElementById('tabMarket').className = t==='market' ? 'active' : '';
+  document.getElementById('tabPolitical').className = t==='political' ? 'active' : '';
+  renderUpdates();
+}
+function renderUpdates(){
+  const list = document.getElementById('updatesList');
+  const items = (UPDATES[tab] || []).slice().sort((a,b) => b.date.localeCompare(a.date));
+  if(!items.length){
+    list.innerHTML = '<div class="empty">' + I18N[lang].empty + '</div>';
+    return;
+  }
+  list.innerHTML = items.map(u => {
+    const title = lang==='id' ? (u.title_id || u.title_en) : (u.title_en || u.title_id);
+    const body  = lang==='id' ? (u.body_id  || u.body_en)  : (u.body_en  || u.body_id);
+    const d = new Date(u.date + 'T00:00:00');
+    const dateStr = d.toLocaleDateString(lang==='id' ? 'id-ID' : 'en-GB', {day:'numeric', month:'long', year:'numeric'});
+    const kind = I18N[lang][tab==='market' ? 'tabMarket' : 'tabPolitical'];
+    return '<article class="update"><div class="meta"><span class="date">' + dateStr +
+      '</span><span class="kind">' + kind + '</span></div><h3>' + escapeHtml(title) +
+      '</h3><p>' + escapeHtml(body) + '</p></article>';
+  }).join('');
+  const latest = items[0];
+  document.getElementById('lastUpdated').textContent =
+    I18N[lang].lastUpdated + ' ' + new Date(latest.date+'T00:00:00')
+      .toLocaleDateString(lang==='id'?'id-ID':'en-GB', {day:'numeric',month:'long',year:'numeric'});
+}
+function escapeHtml(s){
+  return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+async function loadUpdates(){
+  try{
+    const r = await fetch('updates.json?v=' + Date.now(), {cache:'no-store'});
+    if(r.ok){ UPDATES = await r.json(); }
+  }catch(e){ /* fallback: embedded data */ }
+  renderUpdates();
+}
+
+/* ================= language ================= */
+function setLang(l){
+  lang = l;
+  localStorage.setItem('hopemity_lang', l);
+  document.documentElement.lang = l;
+  document.getElementById('btnEN').className = l==='en' ? 'active' : '';
+  document.getElementById('btnID').className = l==='id' ? 'active' : '';
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if(I18N[l][k]) el.textContent = I18N[l][k];
+  });
+  tickClock();
+  renderChips();
+  renderWidgets();
+  renderUpdates();
+}
+
+/* ================= boot ================= */
+setLang(lang);
+loadUpdates();
+</script>
+</body>
+</html>
