@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1170 912">
+  <defs>
+    <clipPath id="disc"><circle cx="585" cy="440" r="436"/></clipPath>
+  </defs>
+  <!-- outer navy ring -->
+  <circle cx="585" cy="440" r="420" fill="none" stroke="#0E3060" stroke-width="30"/>
+  <!-- inner gold ring -->
+  <circle cx="585" cy="440" r="368" fill="none" stroke="#F0A81C" stroke-width="26"/>
+  <!-- sun half disc -->
+  <path d="M 380 548 A 205 205 0 0 1 790 548 Z" fill="#F0A81C"/>
+  <!-- sea: fills lower part of the disc, covers gold ring bottom -->
+  <g clip-path="url(#disc)">
+    <path d="M 150 648 C 430 706 830 650 1040 560 L 1090 912 L 100 912 Z" fill="#0E3060"/>
+    <!-- white swoosh carving through the sea -->
+    <path d="M 110 645 C 430 718 810 668 1050 562 " fill="none" stroke="#FFFFFF" stroke-width="38" stroke-linecap="round"/>
+  </g>
+  <!-- thin navy horizon swoosh extending beyond the circle -->
+  <path d="M 12 592 C 360 648 850 610 1158 510" fill="none" stroke="#0E3060" stroke-width="20" stroke-linecap="round"/>
+</svg>

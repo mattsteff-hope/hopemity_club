@@ -8,7 +8,8 @@
 <meta property="og:title" content="Hopemity Club · Indonesia Market Watch">
 <meta property="og:description" content="Live IDX, Rupiah and Hopemity Consulting updates for club members.">
 <meta name="robots" content="noindex">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23072B59'/%3E%3Cpath d='M18 36a14 14 0 0 1 28 0z' fill='%23F7AE1A'/%3E%3Cpath d='M12 40q20 10 40 0l-2 6q-18 8-36 0z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<meta property="og:image" content="assets/logo-og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -28,7 +29,8 @@
   header{background:var(--navy);color:var(--white);border-bottom:3px solid var(--gold)}
   .head-inner{max-width:1200px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
   .brand{display:flex;align-items:center;gap:12px;min-width:0}
-  .brand svg{flex:0 0 auto}
+  .brand-badge{flex:0 0 auto;width:48px;height:48px;background:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .brand-badge img{width:86%;height:auto;display:block}
   .brand-name{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:.04em}
   .brand-name span{display:block;font-weight:600;font-size:.62rem;letter-spacing:.34em;color:var(--gold)}
   .head-title{flex:1 1 auto;min-width:200px;border-left:1px solid rgba(255,255,255,.18);padding-left:16px}
@@ -96,11 +98,7 @@
 <header>
   <div class="head-inner">
     <div class="brand">
-      <svg width="46" height="40" viewBox="0 0 64 56" aria-hidden="true">
-        <path d="M14 34a18 18 0 0 1 36 0z" fill="#F7AE1A"/>
-        <path d="M8 30 A26 26 0 0 1 56 30" fill="none" stroke="#F7AE1A" stroke-width="4" stroke-linecap="round"/>
-        <path d="M6 38q26 12 52 0l-3 7q-23 10-46 0z" fill="#fff"/>
-      </svg>
+      <span class="brand-badge"><img src="assets/logo.svg" alt="Hopemity Consulting logo"></span>
       <div class="brand-name">HOPEMITY<span>CONSULTING</span></div>
     </div>
     <div class="head-title">
