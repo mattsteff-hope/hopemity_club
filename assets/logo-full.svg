@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1620 620">
+  <defs>
+    <clipPath id="disc2"><circle cx="398" cy="299" r="296"/></clipPath>
+  </defs>
+  <g>
+    <!-- outer navy ring -->
+    <circle cx="398" cy="299" r="286" fill="none" stroke="#0E3060" stroke-width="20"/>
+    <!-- inner gold ring -->
+    <circle cx="398" cy="299" r="250" fill="none" stroke="#F0A81C" stroke-width="18"/>
+    <!-- sun half disc -->
+    <path d="M 260 372 A 139 139 0 0 1 536 372 Z" fill="#F0A81C"/>
+    <!-- sea -->
+    <g clip-path="url(#disc2)">
+      <path d="M 100 440 C 292 480 564 442 706 380 L 740 620 L 68 620 Z" fill="#0E3060"/>
+      <path d="M 75 438 C 292 490 550 454 714 382" fill="none" stroke="#FFFFFF" stroke-width="26" stroke-linecap="round"/>
+    </g>
+    <!-- horizon swoosh -->
+    <path d="M 8 402 C 244 440 578 414 786 346" fill="none" stroke="#0E3060" stroke-width="14" stroke-linecap="round"/>
+  </g>
+  <text x="826" y="335" font-family="'Montserrat', Arial, sans-serif" font-weight="800" font-size="132" letter-spacing="1" fill="#0E3060">HOPEMITY</text>
+  <text x="862" y="470" font-family="'Montserrat', Arial, sans-serif" font-weight="600" font-size="72" letter-spacing="14" fill="#F0A81C">CONSULTING</text>
+</svg>
